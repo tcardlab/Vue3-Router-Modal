@@ -41,13 +41,13 @@ import {
   ref,
   watchEffect,
   computed,
-  defineComponent,
+  defineComponent
 } from 'vue'
 
 const users = readonly([
   { name: 'John' },
   { name: 'Jessica' },
-  { name: 'James' },
+  { name: 'James' }
 ])
 
 
@@ -58,7 +58,7 @@ const showUserModal = (router:any) => async (id: number) => {
 
   await router.push({
     name: 'user',
-    params: { id },
+    params: { id }
     // state: { backgroundView },
   })
 

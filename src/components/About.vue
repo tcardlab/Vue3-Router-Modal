@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: 'about',
   methods: {
     back: () => history.back()
   }

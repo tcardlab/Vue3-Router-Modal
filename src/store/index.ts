@@ -14,7 +14,7 @@ import { createStore } from 'vuex'
  */
 
 export interface StateInterface {
-  // Define your own store structure, using submodules if needed
+  // Define your own store structure, using sub-modules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   example: unknown;

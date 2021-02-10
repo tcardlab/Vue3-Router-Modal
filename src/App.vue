@@ -2,8 +2,7 @@
   <router-view :route="routeWithModal"></router-view>
 </template>
 <script lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { RouteLocationNormalizedLoaded } from 'vue-router'
+import { useRoute, useRouter, RouteLocationNormalizedLoaded } from 'vue-router'
 import {
   computed,
   toRefs,

@@ -9,15 +9,16 @@
 </template>
 
 <script>
-import { defineComponent, readonly} from 'vue'
+import { defineComponent, readonly } from 'vue'
 
 const users = readonly([
   { name: 'John' },
   { name: 'Jessica' },
-  { name: 'James' },
+  { name: 'James' }
 ])
 
 export default defineComponent({
+  name: 'UserDetails',
   props: {
     id: {
       type: String,
