@@ -6,7 +6,7 @@ import { useRoute, useRouter, RouteLocationNormalizedLoaded } from 'vue-router'
 import {
   computed,
   toRefs,
-  defineComponent,
+  defineComponent
 } from 'vue'
 
 export default defineComponent({
@@ -15,17 +15,18 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     // const historyState = computed(() => route.fullPath && window.history.state)
+    const historyState = window.historyState
     const routeWithModal = computed(() => {
-      if (window.historyState.value.backgroundView) {
+      if (historyState.value.backgroundView) {
         return router.resolve(
-          window.historyState.value.backgroundView
+          historyState.value.backgroundView
         ) as RouteLocationNormalizedLoaded
       } else {
         return route
       }
     })
 
-    return { route, routeWithModal, 'historyState': window.historyState, ...toRefs(route) }
+    return { route, routeWithModal, historyState, ...toRefs(route) }
   }
 })
 </script>
