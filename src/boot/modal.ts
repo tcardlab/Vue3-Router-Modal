@@ -1,6 +1,7 @@
 import {
+  ref,
   computed,
-  ref
+  watchEffect
 } from 'vue'
 
 import {
@@ -59,4 +60,37 @@ const routeWithModal = computed(() => {
   }
 })
 
-export { modalRouting, routeWithModal }
+/***  Modal Handlers  ***/
+const showModal = (router:any) => async (routeToObj: any) => {
+  // add backgroundView state to the location so we can render a different view from the one
+  const backgroundView = router.currentRoute.value.fullPath
+
+  await router.push(routeToObj)
+
+  history.replaceState({ ...history.state, backgroundView }, '')
+  historyState.value = history.state
+}
+
+const closeModal = () => {
+  history.back()
+}
+
+const watchModal = (modalRef:any) => watchEffect(
+  () => {
+    const el = modalRef.value
+    if (!el) return
+
+    const show = historyState.value.backgroundView
+    console.log('show modal?', show)
+    if (show) {
+      if ('show' in el) el.show()
+      else el.setAttribute('open', '')
+    } else {
+      if ('close' in el) el.close()
+      else el.removeAttribute('open')
+    }
+  },
+  { flush: 'post' }
+)
+
+export { modalRouting, routeWithModal, showModal, closeModal, watchModal }

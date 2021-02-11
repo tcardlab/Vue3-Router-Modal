@@ -6,7 +6,7 @@
       <ul>
         <li v-for="(user, id) in users">
           <router-link :to="{ name: 'user', params: { id }}">{{ user.name }}</router-link>
-          - <button @click="showUserModal(id)">Details</button>
+          - <button @click="showModal({ name: 'user', params: { id }})">Details</button>
         </li>
       </ul>
 
@@ -22,7 +22,7 @@
             </p>
             <router-link to="/about">Go somewhere else</router-link>
             <br>
-            <button @click="closeUserModal">Close</button>
+            <button @click="closeModal">Close</button>
           </div>
         </div>
       </dialog>
@@ -31,18 +31,15 @@
 </template>
 
 <script lang="ts">
-import About from 'components/About.vue'
-import Child from 'components/Child.vue'
-import UserDetails from 'components/UserDetails.vue'
-
 import { useRoute, useRouter } from 'vue-router'
 import {
   readonly,
   ref,
-  watchEffect,
   computed,
   defineComponent
 } from 'vue'
+
+import { showModal, closeModal, watchModal } from 'boot/modal'
 
 const users = readonly([
   { name: 'John' },
@@ -50,60 +47,20 @@ const users = readonly([
   { name: 'James' }
 ])
 
-
-const showUserModal = (router:any) => async (id: number) => {
-  // add backgroundView state to the location so we can render a different view from the one
-  console.log(router)
-  const backgroundView = router.currentRoute.value.fullPath
-
-  await router.push({
-    name: 'user',
-    params: { id }
-    // state: { backgroundView },
-  })
-
-  history.replaceState({ ...history.state, backgroundView }, '')
-  window.historyState.value = history.state
-}
-
-function closeUserModal() {
-  history.back()
-}
-
 export default defineComponent({
   name: 'PageIndex',
-  components: { About, Child, UserDetails },
   setup() {
-    const modal = ref<HTMLDialogElement | HTMLElement>()
     const route = useRoute()
-    const router = useRouter()
-    const historyState:any = window.historyState
-
     const userId = computed(() => route.params.id)
 
-    watchEffect(
-      () => {
-        const el = modal.value
-        if (!el) return
+    const modal = ref<HTMLDialogElement | HTMLElement>()
+    watchModal(modal)
 
-        const show = historyState.value.backgroundView
-        console.log('show modal?', show)
-        if (show) {
-          if ('show' in el) el.show()
-          else el.setAttribute('open', '')
-        } else {
-          if ('close' in el) el.close()
-          else el.removeAttribute('open')
-        }
-      },
-      { flush: 'post' }
-    )
-
+    const router = useRouter()
     return {
       modal,
-      historyState,
-      'showUserModal': showUserModal(router),
-      closeUserModal,
+      showModal: showModal(router),
+      closeModal,
       userId,
       users,
     }
