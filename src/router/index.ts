@@ -8,6 +8,8 @@ import {
 import { StateInterface } from '../store'
 import routes from './routes'
 
+import { modalRouting } from 'boot/modal'
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -16,18 +18,6 @@ import routes from './routes'
  * async/await or return a Promise which resolves
  * with the Router instance.
  */
-
-import { ref } from 'vue'
-
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
-const historyState = ref(history.state || {})
-declare global {
-  interface Window { historyState: any }
-}
-window.historyState = historyState
 
 export default route<StateInterface>(function (/* { store, ssrContext } */) {
   const createHistory =
@@ -49,17 +39,7 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
     )
   })
 
-  Router.afterEach(() => {
-    window.historyState.value = history.state
-  })
-
-  Router.beforeEach((to, from, next) => {
-    console.log('---')
-    console.log('going from', from.fullPath, 'to', to.fullPath)
-    console.log('state:', window.history.state)
-    console.log('---')
-    next()
-  })
+  modalRouting(Router)
 
   return Router
 })
