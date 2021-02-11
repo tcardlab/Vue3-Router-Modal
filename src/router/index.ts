@@ -29,9 +29,6 @@ declare global {
 }
 window.historyState = historyState
 
-/* const historyState = ref(history.state || {});
-(window as unknown).historyState = historyState */
-
 export default route<StateInterface>(function (/* { store, ssrContext } */) {
   const createHistory =
     process.env.MODE === 'ssr'

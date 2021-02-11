@@ -14,8 +14,8 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    // const historyState = computed(() => route.fullPath && window.history.state)
-    const historyState = window.historyState
+
+    const historyState:any = window.historyState
     const routeWithModal = computed(() => {
       if (historyState.value.backgroundView) {
         return router.resolve(

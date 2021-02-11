@@ -77,7 +77,7 @@ export default defineComponent({
     const modal = ref<HTMLDialogElement | HTMLElement>()
     const route = useRoute()
     const router = useRouter()
-    // const historyState = computed(() => route.fullPath && window.history.state)
+    const historyState:any = window.historyState
 
     const userId = computed(() => route.params.id)
 
@@ -86,7 +86,7 @@ export default defineComponent({
         const el = modal.value
         if (!el) return
 
-        const show = window.historyState.value.backgroundView
+        const show = historyState.value.backgroundView
         console.log('show modal?', show)
         if (show) {
           if ('show' in el) el.show()
@@ -101,7 +101,7 @@ export default defineComponent({
 
     return {
       modal,
-      'historyState': window.historyState,
+      historyState,
       'showUserModal': showUserModal(router),
       closeUserModal,
       userId,
