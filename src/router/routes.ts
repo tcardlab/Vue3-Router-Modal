@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   { path: '/users/:id', props: true, name: 'user', component: UserDetails },
-  // About has no madal view, so it can be lazy loaded
+  // About has no modal view, so it can be lazy loaded
   { path: '/about', component: () => import('components/About.vue') }
 ]
 

@@ -1,4 +1,13 @@
-import { ref } from 'vue'
+import {
+  computed,
+  ref
+} from 'vue'
+
+import {
+  useRoute,
+  useRouter,
+  RouteLocationNormalizedLoaded
+} from 'vue-router'
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -7,6 +16,9 @@ import { ref } from 'vue'
 /* eslint-disable spaced-comment */
 
 /***  Global  ***/
+const route = useRoute
+const router = useRouter
+
 const historyState = ref(history.state || {})
 declare global {
   interface Window { historyState: any }
@@ -36,4 +48,15 @@ const modalRouting = (Router:any) => {
   })
 }
 
-export { modalRouting }
+/***  Route-View Prop Handler  ***/
+const routeWithModal = computed(() => {
+  if (historyState.value.backgroundView) {
+    return router().resolve(
+      historyState.value.backgroundView
+    ) as RouteLocationNormalizedLoaded
+  } else {
+    return route()
+  }
+})
+
+export { modalRouting, routeWithModal }
