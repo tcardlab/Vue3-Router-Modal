@@ -10,6 +10,8 @@ import {
   RouteLocationNormalizedLoaded
 } from 'vue-router'
 
+import { boot } from 'quasar/wrappers'
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -38,16 +40,16 @@ const showHistory = (to:any, from:any) => {
   console.log('---')
 }
 
-const modalRouting = (Router:any) => {
-  Router.afterEach(() => {
+export default boot(({ router }) => {
+  router.afterEach(() => {
     updateHistory()
   })
 
-  Router.beforeEach((to:any, from:any, next:any) => {
+  router.beforeEach((to, from, next) => {
     showHistory(to, from)
     next()
   })
-}
+})
 
 /***  Route-View Prop Handler  ***/
 const routeWithModal = computed(() => {
@@ -93,4 +95,4 @@ const watchModal = (modalRef:any) => watchEffect(
   { flush: 'post' }
 )
 
-export { modalRouting, routeWithModal, showModal, closeModal, watchModal }
+export { routeWithModal, showModal, closeModal, watchModal }

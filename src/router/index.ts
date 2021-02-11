@@ -8,8 +8,6 @@ import {
 import { StateInterface } from '../store'
 import routes from './routes'
 
-import { modalRouting } from 'boot/modal'
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -38,8 +36,6 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     )
   })
-
-  modalRouting(Router)
 
   return Router
 })
