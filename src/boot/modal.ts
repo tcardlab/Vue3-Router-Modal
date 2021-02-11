@@ -63,7 +63,7 @@ const routeWithModal = computed(() => {
 })
 
 /***  Modal Handlers  ***/
-const showModal = (router:any) => async (routeToObj: any) => {
+const showModal = (router = useRouter()) => async (routeToObj: any) => {
   // add backgroundView state to the location so we can render a different view from the one
   const backgroundView = router.currentRoute.value.fullPath
 
@@ -95,4 +95,10 @@ const watchModal = (modalRef:any) => watchEffect(
   { flush: 'post' }
 )
 
-export { routeWithModal, showModal, closeModal, watchModal }
+/***  Composition  ***/
+const modalComposition = (modalRef:any) => {
+  watchModal(modalRef)
+  return { showModal: showModal(), closeModal }
+}
+
+export { routeWithModal, showModal, closeModal, watchModal, modalComposition }

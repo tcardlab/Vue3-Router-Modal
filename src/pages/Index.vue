@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import {
   readonly,
   ref,
@@ -39,7 +39,7 @@ import {
   defineComponent
 } from 'vue'
 
-import { showModal, closeModal, watchModal } from 'boot/modal'
+import { modalComposition } from 'boot/modal'
 
 const users = readonly([
   { name: 'John' },
@@ -53,14 +53,14 @@ export default defineComponent({
     const route = useRoute()
     const userId = computed(() => route.params.id)
 
+    // Modal ref element
     const modal = ref<HTMLDialogElement | HTMLElement>()
-    watchModal(modal)
 
-    const router = useRouter()
     return {
-      modal,
-      showModal: showModal(router),
-      closeModal,
+      // Modal
+      modal, ...modalComposition(modal),
+
+      // Other
       userId,
       users,
     }
