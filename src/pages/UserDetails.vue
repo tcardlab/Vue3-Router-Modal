@@ -22,8 +22,8 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data: () => ({ users })
 })

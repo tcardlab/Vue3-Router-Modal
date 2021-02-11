@@ -10,7 +10,7 @@
         </li>
       </ul>
 
-      <router-view />
+      <router-view></router-view>
 
       <dialog ref="modal" id="dialog">
         <div>
@@ -31,9 +31,9 @@
 </template>
 
 <script lang="ts">
-import About from 'components/About.vue'
+import About from 'pages/About.vue'
 import Child from 'components/Child.vue'
-import UserDetails from 'components/UserDetails.vue'
+import UserDetails from 'pages/UserDetails.vue'
 
 import { useRoute, useRouter } from 'vue-router'
 import {
@@ -101,11 +101,11 @@ export default defineComponent({
 
     return {
       modal,
-      'historyState': window.historyState,
-      'showUserModal': showUserModal(router),
+      historyState: window.historyState,
+      showUserModal: showUserModal(router),
       closeUserModal,
       userId,
-      users,
+      users
     }
   }
 })

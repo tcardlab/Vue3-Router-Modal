@@ -1,16 +1,16 @@
 import { RouteRecordRaw } from 'vue-router'
+import Index from 'pages/Index.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('pages/Index.vue'),
+    component: () => import('layouts/ModalLayout.vue'),
     children: [
-      // to check that displaying the modal doesn't change this
-      { path: '', component: () => import('components/Child.vue') }
+      { path: '', component: Index }, // cannot use lazy loading (modal breaks on refresh).
+      { path: '/about', component: () => import('pages/About.vue') },
+      { path: '/users/:id', props: true, name: 'user', component: () => import('pages/UserDetails.vue') }
     ]
-  },
-  { path: '/about', component: () => import('components/About.vue') },
-  { path: '/users/:id', props: true, name: 'user', component: () => import('components/UserDetails.vue') }
+  }
 ]
 
 export default routes
