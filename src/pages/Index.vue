@@ -1,10 +1,9 @@
 <template>
-  
     <div>
       <h1>Home</h1>
       <p>Select a user</p>
       <ul>
-        <li v-for="(user, id) in users">
+        <li v-for="(user, id) in users" :key="id">
           <router-link :to="{ name: 'user', params: { id }}">{{ user.name }}</router-link>
           - <button @click="showModal({ name: 'user', params: { id }})">Details</button>
         </li>
@@ -27,7 +26,6 @@
         </div>
       </dialog>
     </div>
-  
 </template>
 
 <script lang="ts">
@@ -49,7 +47,7 @@ const users = readonly([
 
 export default defineComponent({
   name: 'PageIndex',
-  setup() {
+  setup () {
     const route = useRoute()
     const userId = computed(() => route.params.id)
 
@@ -58,11 +56,12 @@ export default defineComponent({
 
     return {
       // Modal
-      modal, ...modalComposition(modal),
+      modal,
+      ...modalComposition(modal),
 
       // Other
       userId,
-      users,
+      users
     }
   }
 })
