@@ -28,9 +28,11 @@ Note how the url changes when the modal opens and route view + url is preserved 
 Please beware, "lazy-loading" components does not work with this method.
 
 bad:
+
     routes: [{ path: '/foo', component: () => import('./Foo.vue') }]
     
 good:
+
     import foo from './Foo.vue'
     routes: [{ path: '/foo', component: Foo }]
 
